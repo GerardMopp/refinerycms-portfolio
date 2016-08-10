@@ -1,4 +1,4 @@
-<li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(item) -%>">
+<!-- <li class='clearfix record item<%= cycle("on", "on-hover") %>' id="<%= dom_id(item) -%>">
   <div class='details'>
     <span class='title'>
       <%= item.title %>
@@ -27,4 +27,19 @@
   <div class='image'>
     <%= image_fu item.image, ::Refinery::Portfolio.cover_image_thumb_size %>
   </div>
+</li> -->
+
+
+<li class='record' id="<%= dom_id(item) -%>" style="background: none;">
+  <%= image_fu(item.image, ::Refinery::Portfolio.cover_image_thumb_size) %>
+  <span class='actions'>
+
+    <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_portfolio_admin_item_path(item, :dialog => true, :width => 866, :height => 510),
+         :title => t('.edit') %>
+    <%= link_to refinery_icon_tag("delete.png"), refinery.portfolio_admin_item_path(item),
+         :class => "cancel confirm-delete",
+         :title => t('.delete'),
+         :confirm => t('message', :scope => 'refinery.admin.delete', :title => item.title),
+        :method => :delete %>
+  </span>
 </li>

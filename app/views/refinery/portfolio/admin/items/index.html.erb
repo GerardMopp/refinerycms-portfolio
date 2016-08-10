@@ -1,4 +1,13 @@
+<h1><%= @gallery.title %></h1>
 <section id='records'>
+   <%= form_for [refinery, :portfolio_admin, Refinery::Portfolio::Item.new], :html => {multiple: true, class: 'dropzone'} do |f| %>
+      <div class="fallback">
+          <%= f.file_field :image %>
+          <%= f.submit 'Upload Image' %>
+      </div>
+          <%= f.hidden_field :gallery_id, value: @gallery.id %>
+        <% end %>
+
   <% if searching? %>
     <h2><%= t('results_for', :scope => 'refinery.admin.search', :query => params[:search]) %></h2>
     <% if @items.any? %>
@@ -19,6 +28,8 @@
       </p>
     <% end %>
   <% end %>
+
+
 </section>
 
 <section id='actions'>
@@ -26,3 +37,8 @@
 </section>
 
 <%= render '/refinery/admin/make_sortable', :tree => false if @items.many? %>
+
+
+<% content_for :stylesheets, stylesheet_link_tag('refinery/portfolio/admin/dropzone') %>
+<% content_for :javascripts, javascript_include_tag('refinery/portfolio/admin/dropzone') %>
+
