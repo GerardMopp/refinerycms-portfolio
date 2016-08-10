@@ -1783,7 +1783,7 @@ $(document).ready(function(){
     appendContent(response.image_url, response.item['url']);
   })
 
-  dropzone.on("complete", function() {
+  dropzone.on("queuecomplete", function() {
    location.reload();
   })
 });
