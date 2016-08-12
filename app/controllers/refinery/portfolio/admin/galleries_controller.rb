@@ -17,6 +17,15 @@ module Refinery
           render :layout => false
         end
 
+        def destroy_items
+          @gallery = find_gallery
+          @gallery.items.each do  |item|
+            item.image.destroy
+            item.destroy
+          end
+          redirect_to :back
+        end
+
         protected
 
         def find_parent_gallery

@@ -15,6 +15,14 @@
     <%= link_to t('.create_new'), refinery.new_portfolio_admin_item_path,
                  :class => "add_icon" %>
   </li>
+   <li>
+    
+    <%= link_to 'Delete Gallery Items', refinery.destroy_items_portfolio_admin_gallery_path(@gallery),
+          :class => "cancel confirm-delete",
+          :title => 'Delete Gallery Items',
+          :confirm => ("Are you sure you want to delete all items in #{@gallery.title}"),
+          :method => :delete %>
+  </li>
 <% if !searching? && @items.many? %>
   <li>
     <%= link_to t('.reorder', :what => "Images"),

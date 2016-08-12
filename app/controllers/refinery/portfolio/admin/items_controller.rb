@@ -97,6 +97,10 @@ module Refinery
             redirect_to :back
           end
 
+          def destroy_images
+            
+          end
+
         private
         def find_gallery
           @gallery = Gallery.find(params[:gallery_id]) if params[:gallery_id]
