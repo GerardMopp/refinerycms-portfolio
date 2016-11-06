@@ -9,6 +9,7 @@ module Refinery
                 :xhr_paging => true
 
         before_filter :find_gallery, :only => [:index]
+        before_filter :set_s3_direct_post, only: [:index, :create]
 
         def index
           if params[:orphaned]
@@ -105,6 +106,10 @@ module Refinery
         def find_gallery
           @gallery = Gallery.find(params[:gallery_id]) if params[:gallery_id]
         end
+
+         def set_s3_direct_post
+          @s3_direct_post = S3_BUCKET.presigned_post(key: "portfolio/@gallery.id/${filename}", success_action_status: '201', acl: 'public-read')
+         end
 
       end
     end

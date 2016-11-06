@@ -13,4 +13,15 @@ Refinery::Portfolio.configure do |config|
 
   # Display gallery description?
   # config.display_gallery_text = <%= Refinery::Portfolio.display_gallery_text.inspect %>
+
+  require 'aws-sdk'
+
+  Aws.config.update({
+                        region: 'us-east-1',
+                        credentials: Aws::Credentials.new(ENV['S3_KEY'], ENV['S3_SECRET']),
+                    })
+
+  S3_BUCKET = Aws::S3::Resource.new.bucket(ENV['S3_BUCKET'])
+
+
 end

@@ -3,7 +3,9 @@ Refinery::Core::Engine.routes.draw do
   # Frontend routes
   namespace :portfolio do
     root :to => "galleries#index"
-    resources :galleries, :only => [:index, :show]
+    resources :galleries, :only => [:index, :show] do
+      get :process
+    end
   end
 
   # Admin routes
