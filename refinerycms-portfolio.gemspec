@@ -17,5 +17,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'refinerycms-core', '~> 2.0.0'
   s.add_dependency 'awesome_nested_set', '~> 2.1.0'
   s.add_dependency 'aws-sdk', '2.6.14'
+  s.add_dependency 'pusher', '1.3.0'
   s.add_development_dependency 'refinerycms-testing', '~> 2.0.0'
 end
