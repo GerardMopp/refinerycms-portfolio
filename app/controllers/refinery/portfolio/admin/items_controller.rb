@@ -6,7 +6,8 @@ module Refinery
 
         crudify :'refinery/portfolio/item',
                 :order => 'position ASC',
-                :xhr_paging => true
+                :xhr_paging => false,
+                :paging => false
 
         before_filter :find_gallery, :only => [:index]
         before_filter :set_s3_direct_post, only: [:index, :create]
