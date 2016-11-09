@@ -26,6 +26,12 @@ module Refinery
           redirect_to :back
         end
 
+        def process_import
+          image_import = Refinery::ImageImporter.new(params[:gallery_id])
+          image_import.import
+          redirect_to :back, notice: 'Importing Images'
+        end
+
         protected
 
         def find_parent_gallery

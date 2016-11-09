@@ -1,12 +1,21 @@
 <h1><%= @gallery.title %></h1>
 <section id='records'>
-   <%= form_for [refinery, :portfolio_admin, Refinery::Portfolio::Item.new], :html => {multiple: true, class: 'dropzone', data: { 'form-data' => (@s3_direct_post.fields), 'url' => @s3_direct_post.url, 'host' => URI.parse(@s3_direct_post.url).host }}  do |f| %>
+
+
+
+   <%= form_for [refinery, :portfolio_admin, Refinery::Portfolio::Item.new], authenticity_token: false, :html => {multiple: true, class: 'dropzone', data: { 'form-data' => (@s3_direct_post.fields), 'url' => @s3_direct_post.url, 'host' => URI.parse(@s3_direct_post.url).host }}  do |f| %>
       <div class="fallback">
           <%= f.file_field :image %>
           <%= f.submit 'Upload Image' %>
       </div>
-          <%#= f.hidden_field :gallery_id, value: @gallery.id %>
-        <% end %>
+          
+    <% end %>
+
+    <%= form_tag refinery.portfolio_admin_gallery_process_import_path, class: 'process' do %>
+      <%= hidden_field_tag :gallery_id, @gallery.id %>
+      <%#= submit_tag 'Submit'  %>
+    <% end %>
+
 
   <% if searching? %>
     <h2><%= t('results_for', :scope => 'refinery.admin.search', :query => params[:search]) %></h2>
@@ -56,21 +65,12 @@
     };
 
     app._dropzoneCompleteCallback = function(file, data) {
-      console.dir(file)
-      console.dir(data)
-      // var inputHidden = '<input type="hidden" name="attachments[]" value="';
-      // var json = {
-      //   url: form.data('url') + file.postData.key,
-      //   originalFilename: file.name
-      // };
-      // console.log(json, JSON.stringify(json), JSON.stringify(json).replace('"', '\"'));
-      // inputHidden += window.btoa(JSON.stringify(json)) + '" />';
-      // $('form#createPost').append(inputHidden);
+      $('.process').submit();
     }
 
 
     $( "[name='utf8']" ).remove();
-    $( "[name='authenticity_token']" ).remove();
+    // $( "[name='authenticity_token']" ).remove();
 
 
 

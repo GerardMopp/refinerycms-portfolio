@@ -3,9 +3,7 @@ Refinery::Core::Engine.routes.draw do
   # Frontend routes
   namespace :portfolio do
     root :to => "galleries#index"
-    resources :galleries, :only => [:index, :show] do
-      get :process
-    end
+    resources :galleries, :only => [:index, :show]
   end
 
   # Admin routes
@@ -16,6 +14,7 @@ Refinery::Core::Engine.routes.draw do
           get :children, :on => :member
           delete :destroy_items, :on => :member
           post :update_positions, :on => :collection
+          post :process_import
           resources :items, :except => [:show] do
             post :update_positions, :on => :collection
           end
