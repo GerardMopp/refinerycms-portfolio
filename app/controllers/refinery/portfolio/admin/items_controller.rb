@@ -56,7 +56,7 @@ module Refinery
                if (@item = Refinery::Portfolio::Item.create(params[:item])).valid?
                   flash.notice = t(
                     'refinery.crudify.created',
-                    :what => "'\#{@item.#{options[:title_attribute]}}'"
+                    :what => "'\#{@item.name}'"
                   )
                   unless from_dialog?
                     unless params[:continue_editing] =~ /true|on|1/

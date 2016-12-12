@@ -28,6 +28,14 @@ module Refinery
         alias_method :orphaned, :root_items
       end
 
+      def name
+        if title.present?
+          title
+        else
+          image.title
+        end
+      end
+
     end
   end
 end
