@@ -16,6 +16,7 @@ module Refinery
 	  		create_portfolio_item(image_id)
 	  		object.delete
 	  	end
+	  	notifier('complete', 'complete', true)
 	  end
 
 	  def create_image(url, key)
@@ -34,6 +35,14 @@ module Refinery
   	def create_portfolio_item(image_id)
   		Refinery::Portfolio::Item.create(:image_id => image_id, :gallery_id => @gallery_id)
   	end
+
+  	# TODO fix this
+  	def notifier(action, param, value)
+	    Pusher["gallery_#{@gallery_id}"].trigger(action, {
+	          :"#{param}" => value
+	        })
+	  end
+
 	  
 	end
 end

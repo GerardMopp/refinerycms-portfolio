@@ -51,7 +51,19 @@
 <% content_for :stylesheets, stylesheet_link_tag('refinery/portfolio/admin/dropzone') %>
 <% content_for :javascripts, javascript_include_tag('refinery/portfolio/admin/dropzone') %>
 
+
+<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
 <script>
+
+    var pusher = new Pusher('<%= Pusher.key %>', {cluster: 'eu'});
+    var channel = pusher.subscribe("gallery_<%= @gallery.id %>");
+    channel.bind('complete', function(data) {
+     location.reload();
+    });
+  
+
+
+
 
   $(document).ready(function(){
     var form = $('#new_item');
@@ -68,12 +80,7 @@
       $('.process').submit();
     }
 
-
     $( "[name='utf8']" ).remove();
-    // $( "[name='authenticity_token']" ).remove();
-
-
-
 
   // disable auto discover
   Dropzone.autoDiscover = false;
