@@ -56,11 +56,11 @@ module Refinery
                if (@item = Refinery::Portfolio::Item.create(params[:item])).valid?
                   flash.notice = t(
                     'refinery.crudify.created',
-                    :what => "'\#{@item.name}'"
+                    :what => @item.name
                   )
                   unless from_dialog?
                     unless params[:continue_editing] =~ /true|on|1/
-                      redirect_back_or_default("refinery.#{Refinery.route_for_model(class_name.constantize, :plural => true)}")
+                      redirect_back_or_default("refinery.#{Refinery.route_for_model(Refinery::Portfolio::Item, :plural => true)}")
                     else
                       unless request.xhr?
                         redirect_to :back
