@@ -109,7 +109,7 @@ module Refinery
         end
 
          def set_s3_direct_post
-          @s3_direct_post = S3_BUCKET.presigned_post(key: "portfolio/#{@gallery.id}/${filename}", success_action_status: '201', acl: 'public-read')
+          @s3_direct_post = S3_BUCKET.presigned_post(key: "portfolio/#{@gallery.id}/#{SecureRandom.uuid}/${filename}", success_action_status: '201', acl: 'public-read')
          end
 
       end

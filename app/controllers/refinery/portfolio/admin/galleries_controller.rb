@@ -27,10 +27,29 @@ module Refinery
         end
 
         def process_import
-          image_import = Refinery::ImageImporter.new(params[:gallery_id])
-          image_import.import
+          image_name = params[:image_name].force_encoding('iso-8859-1').encode('utf-8')
+          image_mime_type = params[:image_mime_type].force_encoding('iso-8859-1').encode('utf-8')
+          image_size = params[:image_size].to_s
+          image_width = params[:image_width].to_s
+          image_height = params[:image_height].to_s
+          image_uid = params[:image_uid].force_encoding('iso-8859-1').encode('utf-8')
+
+          #Refinery Image Model
+          image = Refinery::Image.new
+          image.image_name = image_name
+          image.image_mime_type = image_mime_type
+          image.image_size = image_size
+          image.image_width = image_width
+          image.image_height = image_height
+          image.image_uid = image_uid
+          image.save!
+
+          Refinery::Portfolio::Item.create!(:image_id => image.id, :gallery_id => params[:portfolio_id])
+
           redirect_to :back, notice: 'Importing Images'
         end
+
+      
 
         protected
 

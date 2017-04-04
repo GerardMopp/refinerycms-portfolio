@@ -11,8 +11,15 @@
           
     <% end %>
 
-    <%= form_tag refinery.portfolio_admin_gallery_process_import_path, class: 'process' do %>
-      <%= hidden_field_tag :gallery_id, @gallery.id %>
+
+    <%= form_tag refinery.portfolio_admin_gallery_process_import_path, class: 'process', remote: true do %>
+      <%= hidden_field_tag :portfolio_id, @gallery.id %>
+      <%= hidden_field_tag :image_width %>
+      <%= hidden_field_tag :image_height %>
+      <%= hidden_field_tag :image_size %>
+      <%= hidden_field_tag :image_name %>
+      <%= hidden_field_tag :image_uid %>
+      <%= hidden_field_tag :image_mime_type %>
       <%#= submit_tag 'Submit'  %>
     <% end %>
 
@@ -52,14 +59,14 @@
 <% content_for :javascripts, javascript_include_tag('refinery/portfolio/admin/dropzone') %>
 
 
-<script src="http://js.pusher.com/2.2/pusher.min.js"></script>
+<!-- <script src="http://js.pusher.com/2.2/pusher.min.js"></script> -->
 <script>
 
-    var pusher = new Pusher('<%= Pusher.key %>', {cluster: 'eu'});
-    var channel = pusher.subscribe("gallery_<%= @gallery.id %>");
-    channel.bind('complete', function(data) {
-     location.reload();
-    });
+    // var pusher = new Pusher('<%= Pusher.key %>', {cluster: 'eu'});
+    // var channel = pusher.subscribe("gallery_<%= @gallery.id %>");
+    // channel.bind('complete', function(data) {
+    //  location.reload();
+    // });
   
 
 
@@ -77,6 +84,16 @@
     };
 
     app._dropzoneCompleteCallback = function(file, data) {
+       // $('.process').submit();
+    }
+
+    app._success = function(file, response){
+      $('#image_width').val(file.width);
+      $('#image_height').val(file.height);
+      $('#image_size').val(file.size);
+      $('#image_name').val(file.name);
+      $('#image_uid').val($($.parseXML(response)).find('Key').text() );
+      $('#image_mime_type').val(file.type);
       $('.process').submit();
     }
 
@@ -102,7 +119,8 @@
     formData: form.data('form-data'),
     // accept: app._dropzoneAcceptCallback,÷
     sending: app._dropzoneSendingCallback,
-    queuecomplete: app._dropzoneCompleteCallback
+    queuecomplete: app._dropzoneCompleteCallback,
+    success: app._success
   }); 
 
   
